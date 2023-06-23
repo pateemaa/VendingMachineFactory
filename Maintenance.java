@@ -38,4 +38,8 @@ public class Maintenance {
             denom.setDenomQuantity(denom.getDenomination(), denom.getQuantity() + nReplenish);
         }
     }
+
+    public void collectPayment(){
+    
+    }
 }
