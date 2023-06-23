@@ -1,18 +1,27 @@
+import java.utli.*;
+
 public class RegularVM{
 
-    private double dTotalCost;
-    private int nSlots;
+    private double dSales;
+    private int nEndInv;
+    private int nStartInv;
+    private ArrayList<Item> itemsSold;
 
     public RegularVM(){
-        this.nSlots = 8;
     }
 
     public void printSummary(){
-
+        for(){
+        }
+        System.out.println("Starting Inventory: " + nStartInv);   
     }
 
-    public double getTotalCost(){
-        return dTotalCost;
+    public int getEndingInventory(){
+        return nEndInventory;
+    }
+    
+    public double getSales(){
+        return dSales;
     }
 
     
