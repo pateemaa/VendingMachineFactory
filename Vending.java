@@ -7,8 +7,11 @@ public class Vending {
         }
     }
 
-    public void displayCalories(Item sItem){
-         System.out.println(sItem.getItemCalories());
+    public void receivePayment(){
          
+    }
+
+    public void produceChange(){
+    
     }
 }
