@@ -11,7 +11,7 @@ public class RegularVM{
 
     public void printSummary(ArrayList<Item> itemSold){
         for(Item itemName : itemSold){
-            System.out.println(itemName.getItemName())
+            System.out.println(itemName.getItemName());
         }
         System.out.println("Starting Inventory: " + nStartInv);
         System.out.println("Ending Inventory: " + nEndInv);
