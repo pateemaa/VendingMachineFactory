@@ -5,12 +5,11 @@ public class RegularVM{
     private double dSales;
     private int nEndInv;
     private int nStartInv;
-    private ArrayList<Item> itemsSold;
 
     public RegularVM(){
     }
 
-    public void printSummary(){
+    public void printSummary(ArrayList<Item> itemSold){
         for(Item itemName : itemSold){
             System.out.println(itemName.getItemName())
         }
