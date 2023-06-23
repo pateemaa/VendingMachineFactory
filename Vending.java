@@ -1,4 +1,6 @@
 public class Vending {
+
+    private double dChange;
     
     public void dispenseItem(Item q){
         if(q.getItemQuantity() > 0){
