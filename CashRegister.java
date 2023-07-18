@@ -81,25 +81,25 @@ public class CashRegister{
         }
     }
 
-    public void receivePayment(ArrayList<Denomination> denom, ArrayList<Integer> nDenomQty){
+    public void receivePayment(ArrayList<Denomination> denomList, ArrayList<Integer> nDenomQtyList){
         double dPrice, dPayment; 
         ArrayList<Double> dDenomination;
         Denomination d;
         int i;
 
-        for(i=0; i<denom.size(); i++){
+        for(i=0; i<denomList.size(); i++){
             dDenomination.add(d.getDenomination());
         }
         
         dPrice = Item.getPrice();
 
         for(i=0; i<denom.size(); i++){
-            dPayment = Double.sum((dDenomination.get(i)*nDenomQty.get(i)), (dDenomination.get(i+1)*nDenomQty.get(i+1)));
+            dPayment = Double.sum((dDenomination.get(i)*nDenomQtyList.get(i)), (dDenomination.get(i+1)*nDenomQtyList.get(i+1)));
         }
 
         if(dPayment >= dPrice){
             for(i=0; i<denom.size(); i++){
-                addMoney(denom.get(i), nDenomQty.get(i));
+                addMoney(denomList.get(i), nDenomQtyList.get(i));
             }
             System.out.println("Payment made successfully");
         }else{
