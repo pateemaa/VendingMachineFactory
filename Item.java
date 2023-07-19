@@ -1,12 +1,8 @@
-public class Item {
+public class Item extends Product {
 
-    private String sName;
-
-    public Item(String sName) {
-        this.sName = sName;
+    public Item(String sName, double dPrice) {
+        
+        super(sName, dPrice);
     }
 
-    public String getItem() {
-        return sName;
-    }
 }
