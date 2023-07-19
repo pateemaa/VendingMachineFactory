@@ -14,6 +14,7 @@ public class SpecialVM {
         System.out.println("Mixing drink...");
         System.out.println("Garnishing with" + top1 + "...");
         System.out.println("Done, enjoy!");
+        System.out.println("Total: " + dCost);
     }
 
     public void mixAndMatch(Product item1, Product item2, Product item3, Product top1, Product top2){ 
@@ -28,5 +29,6 @@ public class SpecialVM {
         System.out.println("Garnishing with" + top1 + "...");
         System.out.println("Garnishing with" + top2 + "...");
         System.out.println("Done, enjoy!");
+        System.out.println("Total: " + dCost);
     }
 }
