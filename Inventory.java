@@ -21,6 +21,18 @@ public class Inventory {
         }
     }
 
+    public void reduceItem(Product product, int nReduceQty) {
+        int nCurrentQty, nNewQty;
+
+        nCurrentQty = productList.getOrDefault(product, 0);
+        nNewQty = nCurrentQty - nReduceQty;
+
+        if (nNewQty < 0) {
+            nNewQty = 0;
+        }
+        productList.put(product, nNewQty);
+    }
+
     public void restockTopping(Product product, int nTopQty) {
 
         int nCurrentQty;
@@ -31,6 +43,20 @@ public class Inventory {
         } else {
             productList.put(product, nTopQty);
         }
+    }
+
+    public void reduceTopping(Product product, int nReduceQty) {
+
+        int nCurrentQty, nNewQty;
+
+        nCurrentQty = productList.getOrDefault(product, 0);
+        nNewQty = nCurrentQty - nReduceQty;
+
+        if (nNewQty < 0) {
+            nNewQty = 0;
+        }
+        productList.put(product, nNewQty);
+
     }
 
 }
