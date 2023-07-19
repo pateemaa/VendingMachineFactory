@@ -1,12 +1,8 @@
-public class Topping {
-    
-    private String sTopping;
+public class Topping extends Product {
 
-    public Topping(String sTopping) {
-        this.sTopping = sTopping;
+    public Topping(String sTopping, double dPrice) {
+
+        super(sTopping, dPrice);
     }
 
-    public String getToppingName() {
-        return sTopping;
-    }
 }
