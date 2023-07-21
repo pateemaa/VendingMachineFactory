@@ -7,6 +7,7 @@ public class Topping extends Product {
 
     @Override
     public void setPrice(double dPrice) {
+        
         if (dPrice > 0) {
             super.setPrice(dPrice);
         } 
