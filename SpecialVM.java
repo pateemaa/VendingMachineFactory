@@ -4,15 +4,28 @@ public class SpecialVM {
 
     }
 
-    public void mixAndMatch(Product item1, Product item2, Product top1){ 
+    public void mojito(){
+
+    }
+
+    public void pinaColada(){
+
+    }
+
+    public void gimlet(){
+
+    }
+
+    public void mixAndMatch(Product item1, Product item2, Product top1, Product top2){ 
         double dCost;
 
-        dCost = item1.getPrice() + item2.getPrice() + top1.getPrice();
+        dCost = item1.getPrice() + item2.getPrice() + top1.getPrice() + top2.getPrice();
 
         System.out.println("Pouring " + item1 + "...");
         System.out.println("Pouring " + item2 + "...");
         System.out.println("Mixing drink...");
         System.out.println("Garnishing with" + top1 + "...");
+        System.out.println("Garnishing with" + top2 + "...");
         System.out.println("Done, enjoy!");
         System.out.println("Total: " + dCost);
     }
