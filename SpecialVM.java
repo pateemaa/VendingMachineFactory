@@ -8,7 +8,7 @@ public class SpecialVM {
 
     }
 
-    public void pinaColada(){
+    public void ginTonic(){
 
     }
 
