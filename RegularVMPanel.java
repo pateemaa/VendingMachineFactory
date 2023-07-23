@@ -14,7 +14,7 @@ public class RegularVMPanel extends JPanel{
     Image vodka;
     Image vermouth;
 
-    private final JLabel item;
+    private JLabel item;
 
     public RegularVMPanel(){
 
@@ -29,13 +29,18 @@ public class RegularVMPanel extends JPanel{
         vodka = new ImageIcon("vodka.png").getImage();
         vermouth = new ImageIcon("vermouth.png").getImage();
 
-        item = new JLabel("Item:");
-        
         this.setPreferredSize(new Dimension(615, 620));
+
+        item = new JLabel("Item:");
+        item.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
+        item.setBounds(90, 500, 37, 50);
         this.add(item);
-    }    
+       
+    } 
     
     public void paint(Graphics g){
+        super.paint(g);
+
         Graphics2D g2D = (Graphics2D) g;
         
         g2D.setPaint(Color.BLACK);
@@ -65,9 +70,6 @@ public class RegularVMPanel extends JPanel{
         g2D.drawImage(vodka, 400, 200, null);
         g2D.drawImage(vermouth, 475, 205, null);
 
-        item.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
-        item.setBounds(18, 200, 37, 50);
-        
     }
 
 }

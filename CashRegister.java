@@ -50,7 +50,7 @@ public class CashRegister{
         double dPrice, dPayment, dDenomination;
 
         dDenomination = denom.getDenomination();
-        dPrice = Item.getPrice();
+        dPrice = Product.getPrice();
 
         dPayment = dDenomination*nDenomQty;
 
@@ -93,12 +93,12 @@ public class CashRegister{
         
         dPrice = Item.getPrice();
 
-        for(i=0; i<denom.size(); i++){
+        for(i=0; i<denomList.size(); i++){
             dPayment = Double.sum((dDenomination.get(i)*nDenomQtyList.get(i)), (dDenomination.get(i+1)*nDenomQtyList.get(i+1)));
         }
 
         if(dPayment >= dPrice){
-            for(i=0; i<denom.size(); i++){
+            for(i=0; i<denomList.size(); i++){
                 addMoney(denomList.get(i), nDenomQtyList.get(i));
             }
             System.out.println("Payment made successfully");
