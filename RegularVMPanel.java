@@ -14,7 +14,10 @@ public class RegularVMPanel extends JPanel{
     Image vodka;
     Image vermouth;
 
-    private JLabel item;
+    // private JLabel item;
+    // private JLabel payment;
+    // private JLayeredPane layer;
+    // private JComboBox itemList;
 
     public RegularVMPanel(){
 
@@ -31,10 +34,24 @@ public class RegularVMPanel extends JPanel{
 
         this.setPreferredSize(new Dimension(615, 620));
 
-        item = new JLabel("Item:");
-        item.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
-        item.setLocation(100, 500);
-        this.add(item);
+        // item = new JLabel("Item:");
+        // item.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
+        // item.setBounds(10, 10, 50, 30);
+
+        // payment = new JLabel("Payment:");
+        // payment.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
+        // payment.setBounds(10, 70, 80, 30);
+
+        // itemList = new JComboBox();
+        
+        // layer = new JLayeredPane();
+        // layer.setPreferredSize(new Dimension(250, 250));
+        // layer.setOpaque(true);
+        // layer.add(item, JLayeredPane.DRAG_LAYER);
+        // layer.add(payment, JLayeredPane.DRAG_LAYER);
+        
+        
+        // this.add(layer, BorderLayout.SOUTH);
 
 
        
@@ -42,7 +59,9 @@ public class RegularVMPanel extends JPanel{
     
     public void paintComponent(Graphics g){
 
-        Graphics2D g2D = (Graphics2D) g.create();
+        super.paintComponent(g);
+
+        Graphics2D g2D = (Graphics2D) g;
         
         g2D.setPaint(Color.BLACK);
         g2D.setStroke(new BasicStroke(3));
@@ -71,7 +90,6 @@ public class RegularVMPanel extends JPanel{
         g2D.drawImage(vodka, 400, 200, null);
         g2D.drawImage(vermouth, 475, 205, null);
 
-        repaint();
     }
 
 }

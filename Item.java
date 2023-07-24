@@ -17,4 +17,7 @@ public class Item extends Product {
         }
     }
 
+    public String toString() {
+        return sName; 
+    }
 }

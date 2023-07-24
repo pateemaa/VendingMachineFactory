@@ -8,4 +8,9 @@ public class Denomination{
     public double getDenomination(){
         return dValue;
     }
+
+    public String toString(){
+        return String.format("%.2f",dValue);
+    }
+    
 }

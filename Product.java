@@ -1,6 +1,6 @@
 public abstract class Product {
 
-    private String sName;
+    protected String sName;
     private double dPrice;
 
     public Product(String sName, double dPrice) {
