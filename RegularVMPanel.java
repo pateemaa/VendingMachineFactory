@@ -33,15 +33,16 @@ public class RegularVMPanel extends JPanel{
 
         item = new JLabel("Item:");
         item.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
-        item.setBounds(90, 500, 37, 50);
+        item.setLocation(100, 500);
         this.add(item);
+
+
        
     } 
     
-    public void paint(Graphics g){
-        super.paint(g);
+    public void paintComponent(Graphics g){
 
-        Graphics2D g2D = (Graphics2D) g;
+        Graphics2D g2D = (Graphics2D) g.create();
         
         g2D.setPaint(Color.BLACK);
         g2D.setStroke(new BasicStroke(3));
@@ -70,6 +71,7 @@ public class RegularVMPanel extends JPanel{
         g2D.drawImage(vodka, 400, 200, null);
         g2D.drawImage(vermouth, 475, 205, null);
 
+        repaint();
     }
 
 }

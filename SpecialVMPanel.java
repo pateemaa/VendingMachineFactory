@@ -8,7 +8,7 @@ public class SpecialVMPanel extends JPanel{
     Image sodaW;
     Image gin;
     Image tonic;
-    Image tequilla;
+    Image tequila;
     Image whiskey;
     Image orangeJ;
     Image vodka;
@@ -26,29 +26,45 @@ public class SpecialVMPanel extends JPanel{
         sodaW = new ImageIcon("sodaW.png").getImage();
         gin = new ImageIcon("gin.png").getImage();
         tonic = new ImageIcon("tonic.png").getImage();
-        tequilla = new ImageIcon("tequilla.png").getImage();
+        tequila = new ImageIcon("tequila.png").getImage();
         whiskey = new ImageIcon("whiskey.png").getImage();
         orangeJ = new ImageIcon("oj.png").getImage();
         vodka = new ImageIcon("vodka.png").getImage();
         vermouth = new ImageIcon("vermouth.png").getImage();
-        this.setPreferredSize(new Dimension(615, 620));
+        this.setPreferredSize(new Dimension(900, 620));
     }
 
     public void paint(Graphics g){
         Graphics2D g2D = (Graphics2D) g;
 
-        g2D.setPaint(Color.BLACK);
+        g2D.setPaint(new Color(0xF4A460));
         g2D.setStroke(new BasicStroke(3));
-        g2D.drawRect(15, 15, 575, 375);
-        g2D.drawImage(rum, 20, 20, null);
+        g2D.drawRoundRect(15, 15, 575, 375, 50, 50);
+        g2D.fillRoundRect(15, 15, 574, 374, 50, 50);
+
+        g2D.setPaint(new Color(0x62BD69));
+        g2D.setStroke(new BasicStroke(3));
+        g2D.drawRoundRect(15, 400, 280, 200, 50, 50);
+        g2D.fillRoundRect(15, 400, 280, 200, 50, 50);
+
+        g2D.setPaint(new Color(0xFDFC96));
+        g2D.setStroke(new BasicStroke(3));
+        g2D.drawRoundRect(305, 400, 280, 200, 50, 50);
+        g2D.fillRoundRect(305, 400, 280, 200, 50, 50);
+
+        g2D.setPaint(new Color(0x363636));
+        g2D.drawRect(605, 15, 280, 380);
+        g2D.fillRect(605, 15, 280, 380);
+        
+        g2D.drawImage(rum, 20, 23, null);
         g2D.drawImage(limeJ, 120, 50, null);
         g2D.drawImage(sodaW, 280, 20, null);
-        g2D.drawImage(gin, 300, 20, null);
+        g2D.drawImage(gin, 390, 25, null);
         g2D.drawImage(tonic, 475, 20, null);
-        g2D.drawImage(tequilla, 20, 200, null);
-        g2D.drawImage(whiskey, 120, 200, null);
+        g2D.drawImage(tequila, 5, 210, null);
+        g2D.drawImage(whiskey, 120, 205, null);
         g2D.drawImage(orangeJ, 280, 200, null);
-        g2D.drawImage(vodka, 300, 200, null);
-        g2D.drawImage(vermouth, 500, 200, null);
+        g2D.drawImage(vodka, 400, 200, null);
+        g2D.drawImage(vermouth, 475, 205, null);
     }
 }
