@@ -14,11 +14,6 @@ public class RegularVMPanel extends JPanel{
     Image vodka;
     Image vermouth;
 
-    // private JLabel item;
-    // private JLabel payment;
-    // private JLayeredPane layer;
-    // private JComboBox itemList;
-
     public RegularVMPanel(){
 
         rum = new ImageIcon("rum.png").getImage();
@@ -33,27 +28,7 @@ public class RegularVMPanel extends JPanel{
         vermouth = new ImageIcon("vermouth.png").getImage();
 
         this.setPreferredSize(new Dimension(615, 620));
-
-        // item = new JLabel("Item:");
-        // item.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
-        // item.setBounds(10, 10, 50, 30);
-
-        // payment = new JLabel("Payment:");
-        // payment.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
-        // payment.setBounds(10, 70, 80, 30);
-
-        // itemList = new JComboBox();
-        
-        // layer = new JLayeredPane();
-        // layer.setPreferredSize(new Dimension(250, 250));
-        // layer.setOpaque(true);
-        // layer.add(item, JLayeredPane.DRAG_LAYER);
-        // layer.add(payment, JLayeredPane.DRAG_LAYER);
-        
-        
-        // this.add(layer, BorderLayout.SOUTH);
-
-
+        this.setBackground(new Color(0x4683b7));
        
     } 
     
