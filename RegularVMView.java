@@ -67,6 +67,7 @@ public class RegularVMView extends JFrame implements ActionListener{
         addBtn = new JButton("Add");
         addBtn.setFocusable(false);
         addBtn.setBounds(20, 170, 60, 30);
+        addBtn.addActionListener(this);
 
         payBtn = new JButton("Pay");
         payBtn.setFocusable(false);
@@ -75,6 +76,7 @@ public class RegularVMView extends JFrame implements ActionListener{
         //JTextArea
         display = new JTextArea(" ");
         display.setBounds(225, 10, 360, 200);
+        display.setEditable(false);
 
         //JLayeredPane
         layer = new JLayeredPane();
@@ -102,10 +104,29 @@ public class RegularVMView extends JFrame implements ActionListener{
     
     }
 
+    public double getDenomListSelectedItem(){
+        Denomination denom_selected = (Denomination) denominationList.getSelectedItem();
+        
+        return denom_selected.getDenomination();
+    }
+
+    public int getPaymentTotal(){
+        int cashQty, denomType, total = 0;
+
+        cashQty = (int) cashSlider.getValue();
+        denomType = (int) getDenomListSelectedItem();
+
+        total += cashQty*denomType;
+        
+        return total;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == itemList){
-            System.out.println(itemList.getSelectedItem());
+        if(e.getSource() == cashSlider){
+            System.out.println(cashSlider.getValue());
+        }else if(e.getSource() == addBtn){
+            display.setText(cashSlider.getValue() + " " + getDenomListSelectedItem() + "\n" + "Total: " + getPaymentTotal());
         }
     }
     

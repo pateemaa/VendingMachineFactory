@@ -31,7 +31,7 @@ public class SpecialVMPanel extends JPanel{
         orangeJ = new ImageIcon("oj.png").getImage();
         vodka = new ImageIcon("vodka.png").getImage();
         vermouth = new ImageIcon("vermouth.png").getImage();
-        this.setPreferredSize(new Dimension(900, 620));
+        this.setPreferredSize(new Dimension(600, 620));
     }
 
     public void paint(Graphics g){
@@ -51,10 +51,6 @@ public class SpecialVMPanel extends JPanel{
         g2D.setStroke(new BasicStroke(3));
         g2D.drawRoundRect(305, 400, 280, 200, 50, 50);
         g2D.fillRoundRect(305, 400, 280, 200, 50, 50);
-
-        g2D.setPaint(new Color(0x363636));
-        g2D.drawRect(605, 15, 280, 380);
-        g2D.fillRect(605, 15, 280, 380);
         
         g2D.drawImage(rum, 20, 23, null);
         g2D.drawImage(limeJ, 120, 50, null);
