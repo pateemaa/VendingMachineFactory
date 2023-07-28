@@ -2,6 +2,7 @@ import java.util.*;
 
 public class CashRegister{
     private Map<Denomination, Integer> register;
+    private double dTotalCost;
 
     public CashRegister(Denomination denom, int nDenomQty){
         register = new HashMap<>();
@@ -46,58 +47,45 @@ public class CashRegister{
         }
     }
 
-    public void receivePayment(Denomination denom, int nDenomQty){
-        double dPrice, dPayment, dDenomination;
-
-        dDenomination = denom.getDenomination();
-        dPrice = Product.getPrice();
-
-        dPayment = dDenomination*nDenomQty;
-
-        if(dPayment >= dPrice){
-            addMoney(denom, nDenomQty);
-            System.out.println("Payment made successfully");
-        }else{
-            System.out.println("Error: Payment not enough");
-        }
+    public void calculateTotalCost(Item item){
+        dTotalCost = item.getPrice();
     }
 
-    public void receivePayment(Denomination denom1, Denomination denom2, int nDenomQty1, int nDenomQty2){
-        double dPrice, dPayment; 
-        ArrayList<Double> dDenomination;
+    public void calculateTotalCost(ArrayList<Item> itemList, ArrayList<Topping> toppingList) {
+        double dItemTotal, dTopTotal;
 
-        dDenomination.add(denom1.getDenomination());
-        dDenomination.add(denom2.getDenomination());
-        dPrice = Item.getPrice();
+        dItemTotal = 0.00;
+        dTopTotal = 0.00;
 
-        dPayment = Double.sum((dDenomination.get(0)*nDenomQty1), (dDenomination.get(1)*nDenomQty2));
-
-        if(dPayment >= dPrice){
-            addMoney(denom1, nDenomQty1);
-            addMoney(denom2, nDenomQty2);
-            System.out.println("Payment made successfully");
-        }else{
-            System.out.println("Error: Payment not enough");
+        for(Item item : itemList){
+            dItemTotal += item.getPrice();
         }
+
+        for(Topping topping : toppingList){
+            dTopTotal += topping.getPrice();
+        }
+
+        dTotalCost = dItemTotal + dTopTotal;
+
+    }
+
+    public double getTotalCost(){
+        return dTotalCost;
     }
 
     public void receivePayment(ArrayList<Denomination> denomList, ArrayList<Integer> nDenomQtyList){
-        double dPrice, dPayment; 
-        ArrayList<Double> dDenomination;
+        double dPayment = 0.00; 
+        ArrayList<Double> dDenomination = new ArrayList<>();
         Denomination d;
         int i;
 
         for(i=0; i<denomList.size(); i++){
+            d = denomList.get(i);
             dDenomination.add(d.getDenomination());
-        }
-        
-        dPrice = Item.getPrice();
-
-        for(i=0; i<denomList.size(); i++){
-            dPayment = Double.sum((dDenomination.get(i)*nDenomQtyList.get(i)), (dDenomination.get(i+1)*nDenomQtyList.get(i+1)));
+            dPayment += d.getDenomination()*nDenomQtyList.get(i);
         }
 
-        if(dPayment >= dPrice){
+        if(dPayment >= dTotalCost){
             for(i=0; i<denomList.size(); i++){
                 addMoney(denomList.get(i), nDenomQtyList.get(i));
             }

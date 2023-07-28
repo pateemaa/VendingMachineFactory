@@ -34,6 +34,8 @@ public class RegularVMPanel extends JPanel{
     
     public void paintComponent(Graphics g){
 
+        Item drinkName;
+
         super.paintComponent(g);
 
         Graphics2D g2D = (Graphics2D) g;
@@ -64,7 +66,30 @@ public class RegularVMPanel extends JPanel{
         g2D.drawImage(orangeJ, 280, 200, null);
         g2D.drawImage(vodka, 400, 200, null);
         g2D.drawImage(vermouth, 475, 205, null);
-
+        
+        g2D.setPaint(Color.BLACK);
+        //Product name
+        g2D.drawString("Rum", 60, 175);
+        g2D.drawString("Rum", 175, 175);
+        g2D.drawString("Rum", 290, 175);
+        g2D.drawString("Rum", 410, 175);
+        g2D.drawString("Rum", 530, 175);
+        g2D.drawString("Rum", 60, 354);
+        g2D.drawString("Rum", 175, 354);
+        g2D.drawString("Rum", 290, 354);
+        g2D.drawString("Rum", 410, 354);
+        g2D.drawString("Rum", 530, 354);
+        //Product prices
+        g2D.drawString("20.00", 60, 190);
+        g2D.drawString("Rum", 175, 190);
+        g2D.drawString("Rum", 290, 190);
+        g2D.drawString("Rum", 410, 190);
+        g2D.drawString("Rum", 530, 190);
+        g2D.drawString("Rum", 60, 370);
+        g2D.drawString("Rum", 175, 370);
+        g2D.drawString("Rum", 290, 370);
+        g2D.drawString("Rum", 410, 370);
+        g2D.drawString("Rum", 530, 370);
     }
 
 }

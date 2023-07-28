@@ -2,9 +2,13 @@ import java.util.*;
 
 public class Inventory {
     private Map<Product, Integer> productList;
+    private ArrayList<Item> itemList;
+    private ArrayList<Topping> toppingList;
 
-    public Inventory() {
+    public Inventory(Product prod, int prodQty) {
         productList = new HashMap<>();
+        itemList = new ArrayList<>();
+        toppingList = new ArrayList<>();
     }
 
     public void displayInventory() {
@@ -16,51 +20,35 @@ public class Inventory {
     }
 
     public void restockProduct(Product product, int nRestockQty) {
-        if (product instanceof Item) {
-            restockItem(product, nRestockQty);
-        } else if (product instanceof Topping) {
-            restockTopping(product, nRestockQty);
+        if (product instanceof Item || product instanceof Topping) {
+            int nCurrentQty = productList.getOrDefault(product, 0);
+            productList.put(product, nCurrentQty + nRestockQty);
         } else {
             throw new IllegalArgumentException("Invalid Product Type");
         }
     }
 
     public void reduceProduct(Product product, int nReduceQty) {
-        if (product instanceof Item) {
-            reduceItem(product, nReduceQty);
-        } else if (product instanceof Topping) {
-            reduceTopping(product, nReduceQty);
+        if (product instanceof Item || product instanceof Topping) {
+            int nCurrentQty = productList.getOrDefault(product, 0);
+            int nNewQty = nCurrentQty - nReduceQty;
+            if (nNewQty < 0) {
+                nNewQty = 0; 
+            }
+            productList.put(product, nNewQty);
         } else {
             throw new IllegalArgumentException("Invalid Product Type");
         }
     }
-
-    public void restockItem(Product product, int nRestockQty) {
-        int nCurrentQty = productList.getOrDefault(product, 0);
-        productList.put(product, nCurrentQty + nRestockQty);
-    }
-
-    public void reduceItem(Product product, int nReduceQty) {
-        int nCurrentQty = productList.getOrDefault(product, 0);
-        int nNewQty = nCurrentQty - nReduceQty;
-        if (nNewQty < 0) {
-            nNewQty = 0; 
-        }
-        productList.put(product, nNewQty);
-    }
-
-    public void restockTopping(Product product, int nTopQty) {
-        int nCurrentQty = productList.getOrDefault(product, 0);
-        productList.put(product, nCurrentQty + nTopQty);
-    }
-
-    public void reduceTopping(Product product, int nReduceQty) {
-        int nCurrentQty = productList.getOrDefault(product, 0);
-        int nNewQty = nCurrentQty - nReduceQty;
-        if (nNewQty < 0) {
-            nNewQty = 0; 
-        }
-        productList.put(product, nNewQty);
-    }
     
+    public void addProduct(Product prod, int prodQty){
+
+        productList.put(prod, prodQty);
+
+        if(prod instanceof Item){
+            itemList.add((Item) prod);
+        }else if (prod instanceof Topping){
+            toppingList.add((Topping) prod);
+        }
+    }
 }
