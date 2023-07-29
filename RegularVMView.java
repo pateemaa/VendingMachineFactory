@@ -1,36 +1,34 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
-public class RegularVMView extends JFrame implements ActionListener{
+public class RegularVMView extends JFrame{
     
     RegularVMPanel rvmPanel;
+    RegularVMModel rvmModel;
     private JLabel item;
     private JLabel payment;
     private JLayeredPane layer;
     private JComboBox<Item> itemList;
     private JComboBox<Denomination> denominationList;
-    private ArrayList<Item> drinks;
-    private ArrayList<Denomination> cash;
     private JSlider cashSlider;
     private JButton addBtn;
     private JButton payBtn;
     private JTextArea display;
+    private JMenuBar menu;
+    private JMenu maintenance;
+    private JMenuItem restock;
+    private JMenuItem replenish;
+    private JMenuItem updatePrice;
+    private JMenuItem collect;
 
     public RegularVMView(){
 
-        drinks = new ArrayList<>();
-        drinks.add(new Item("Rum", 1.50));
-        drinks.add(new Item("Vodka", 1.25));
-        drinks.add(new Item("Tequila", 1.30));
-
-        cash = new ArrayList<>();
-        cash.add(new Denomination(100.00));
-        cash.add(new Denomination(50.00));
-        cash.add(new Denomination(20.00));
-
         rvmPanel = new RegularVMPanel();
+        rvmModel = new RegularVMModel();
+
+        rvmModel.populateItems();
+        rvmModel.populateRegister();
         
         //ImageIcon
         ImageIcon logo = new ImageIcon("logo.png");
@@ -45,12 +43,10 @@ public class RegularVMView extends JFrame implements ActionListener{
         payment.setBounds(20, 70, 80, 30);
 
         //JComboBox
-        itemList = new JComboBox<>(drinks.toArray(new Item[0]));
-        itemList.addActionListener(this);
-        itemList.setBounds(60, 10, 70, 30);
+        itemList = new JComboBox<>(rvmModel.getItems().toArray(new Item[0]));
+        itemList.setBounds(60, 10, 110, 30);
 
-        denominationList = new JComboBox<>(cash.toArray(new Denomination[0]));
-        denominationList.addActionListener(this);
+        denominationList = new JComboBox<>(rvmModel.getCashRegister().toArray(new Denomination[0]));
         denominationList.setBounds(85, 70, 80, 30);
         
         //JSlider
@@ -67,7 +63,6 @@ public class RegularVMView extends JFrame implements ActionListener{
         addBtn = new JButton("Add");
         addBtn.setFocusable(false);
         addBtn.setBounds(20, 170, 60, 30);
-        addBtn.addActionListener(this);
 
         payBtn = new JButton("Pay");
         payBtn.setFocusable(false);
@@ -78,9 +73,31 @@ public class RegularVMView extends JFrame implements ActionListener{
         display.setBounds(225, 10, 360, 200);
         display.setEditable(false);
 
+        //JMenuItem
+        restock = new JMenuItem("Restock Items");
+        replenish = new JMenuItem("Replenish Register");
+        updatePrice = new JMenuItem("Update Item Price");
+        collect = new JMenuItem("Collect Cash");
+
+        restock.setFont(new Font("Calibri", Font.PLAIN, 15));
+        replenish.setFont(new Font("Calibri", Font.PLAIN, 15));
+        updatePrice.setFont(new Font("Calibri", Font.PLAIN, 15));
+        collect.setFont(new Font("Calibri", Font.PLAIN, 15));
+
+        //JMenu
+        maintenance = new JMenu("Maintenance");
+        maintenance.add(restock);
+        maintenance.add(replenish);
+        maintenance.add(updatePrice);
+        maintenance.add(collect);
+
+        //JMenuBar
+        menu = new JMenuBar();
+        menu.add(maintenance);
+        
         //JLayeredPane
         layer = new JLayeredPane();
-        layer.setPreferredSize(new Dimension(200, 300));
+        layer.setPreferredSize(new Dimension(200, 280));
         layer.setBackground(new Color(0x4683b7));
         layer.setOpaque(true);
         layer.add(item, JLayeredPane.DRAG_LAYER);
@@ -98,6 +115,7 @@ public class RegularVMView extends JFrame implements ActionListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //exit out of application
         this.setResizable(false);
         this.setIconImage(logo.getImage());
+        this.setJMenuBar(menu);
         this.add(rvmPanel);
         this.add(layer, BorderLayout.SOUTH);
         this.pack();
@@ -108,6 +126,14 @@ public class RegularVMView extends JFrame implements ActionListener{
         Denomination denom_selected = (Denomination) denominationList.getSelectedItem();
         
         return denom_selected.getDenomination();
+    }
+
+    public int getCashSliderValue(){
+            int nCashQty;
+
+            nCashQty = cashSlider.getValue();
+
+            return nCashQty;
     }
 
     public int getPaymentTotal(){
@@ -121,13 +147,39 @@ public class RegularVMView extends JFrame implements ActionListener{
         return total;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == cashSlider){
-            System.out.println(cashSlider.getValue());
-        }else if(e.getSource() == addBtn){
-            display.setText(cashSlider.getValue() + " " + getDenomListSelectedItem() + "\n" + "Total: " + getPaymentTotal());
-        }
+    public void setAddBtnActionListener(ActionListener action){
+        addBtn.addActionListener(action);
+    }
+
+    public void setPayBtnActionListener(ActionListener action){
+        payBtn.addActionListener(action);
+    }
+
+    public void setItemListActionListener(ActionListener action){
+        itemList.addActionListener(action);
+    }
+
+    public void setDenomListActionListener(ActionListener action){
+        denominationList.addActionListener(action);
+    }
+
+     public void setRestonkActionListener(ActionListener action){
+        restock.addActionListener(action);
+    }
+
+    public void setReplenishActionListener(ActionListener action){
+        replenish.addActionListener(action);
+    }
+
+    public void setUpdatePriceActionListener(ActionListener action){
+        updatePrice.addActionListener(action);
     }
     
+    public void setCollectActionListener(ActionListener action){
+        collect.addActionListener(action);
+    }
+
+    public void setDisplayTextArea(String feedback){
+        display.setText(feedback);
+    }
 }

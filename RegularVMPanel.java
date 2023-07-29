@@ -13,8 +13,13 @@ public class RegularVMPanel extends JPanel{
     Image orangeJ;
     Image vodka;
     Image vermouth;
+    RegularVMModel rVmModel;
 
     public RegularVMPanel(){
+
+        rVmModel = new RegularVMModel();
+        rVmModel.populateItems();
+        rVmModel.populateRegister();
 
         rum = new ImageIcon("rum.png").getImage();
         limeJ = new ImageIcon("limej.png").getImage();
@@ -33,8 +38,6 @@ public class RegularVMPanel extends JPanel{
     } 
     
     public void paintComponent(Graphics g){
-
-        Item drinkName;
 
         super.paintComponent(g);
 
@@ -69,27 +72,27 @@ public class RegularVMPanel extends JPanel{
         
         g2D.setPaint(Color.BLACK);
         //Product name
-        g2D.drawString("Rum", 60, 175);
-        g2D.drawString("Rum", 175, 175);
-        g2D.drawString("Rum", 290, 175);
-        g2D.drawString("Rum", 410, 175);
-        g2D.drawString("Rum", 530, 175);
-        g2D.drawString("Rum", 60, 354);
-        g2D.drawString("Rum", 175, 354);
-        g2D.drawString("Rum", 290, 354);
-        g2D.drawString("Rum", 410, 354);
-        g2D.drawString("Rum", 530, 354);
+        g2D.drawString(rVmModel.getItems().get(0).getName(), 60, 175);
+        g2D.drawString(rVmModel.getItems().get(1).getName(), 155, 175);
+        g2D.drawString(rVmModel.getItems().get(2).getName(), 270, 175);
+        g2D.drawString(rVmModel.getItems().get(3).getName(), 410, 175);
+        g2D.drawString(rVmModel.getItems().get(4).getName(), 530, 175);
+        g2D.drawString(rVmModel.getItems().get(5).getName(), 55, 354);
+        g2D.drawString(rVmModel.getItems().get(6).getName(), 160, 354);
+        g2D.drawString(rVmModel.getItems().get(7).getName(), 270, 354);
+        g2D.drawString(rVmModel.getItems().get(8).getName(), 405, 354);
+        g2D.drawString(rVmModel.getItems().get(9).getName(), 520, 354);
         //Product prices
-        g2D.drawString("20.00", 60, 190);
-        g2D.drawString("Rum", 175, 190);
-        g2D.drawString("Rum", 290, 190);
-        g2D.drawString("Rum", 410, 190);
-        g2D.drawString("Rum", 530, 190);
-        g2D.drawString("Rum", 60, 370);
-        g2D.drawString("Rum", 175, 370);
-        g2D.drawString("Rum", 290, 370);
-        g2D.drawString("Rum", 410, 370);
-        g2D.drawString("Rum", 530, 370);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(0).getPrice()), 60, 190);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(1).getPrice()), 170, 190);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(2).getPrice()), 288, 190);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(3).getPrice()), 405, 190);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(4).getPrice()), 532, 190);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(5).getPrice()), 60, 370);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(6).getPrice()), 165, 370);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(7).getPrice()), 290, 370);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(8).getPrice()), 410, 370);
+        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(9).getPrice()), 530, 370);
     }
 
 }
