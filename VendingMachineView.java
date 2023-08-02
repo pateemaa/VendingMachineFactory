@@ -7,7 +7,9 @@ public class VendingMachineView extends JFrame{
     private final JButton spvmBtn;
     private final JLabel text;
 
-    
+    /**
+     * Creates an instance of the vending machine's view
+     */
     public VendingMachineView(){
 
         //ImageIcons
@@ -49,10 +51,18 @@ public class VendingMachineView extends JFrame{
 
     }
     
+    /**
+     * sets the action listener for the Regular button 
+     * @param action is the action when Regular is clicked
+     */
     public void setRvmBtnActionListener(ActionListener action) {
 		rvmBtn.addActionListener(action);
 	}
 
+    /**
+     * sets the action listener for the Special button 
+     * @param action is the action when Special is clicked
+     */
     public void setSpvmBtnActionListener(ActionListener action){
         spvmBtn.addActionListener(action);
     }

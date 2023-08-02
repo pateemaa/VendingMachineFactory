@@ -1,10 +1,14 @@
 public class VendingMachine {
     public static void main(String[] args){
         VendingMachineView vmView = new VendingMachineView();
-        RegularVMView rgvmView = new RegularVMView();
-        SpecialVMView spvmView = new SpecialVMView();
+        RegularVMModel rMod = new RegularVMModel();
 
+        CashRegister cReg = new CashRegister();
+        rMod.initializeRegister();
 
-        new VendingMachineController(vmView, rgvmView, spvmView);
+        Inventory inventory = new Inventory();
+        rMod.initializeInventory();
+
+        new VendingMachineController(vmView);
     }
 }

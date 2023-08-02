@@ -1,23 +1,37 @@
 import java.awt.event.*;
 
+/**
+ * This class is the controller for the vending machine
+ */
 public class VendingMachineController {
-    private final VendingMachineView vmView;
-    private final RegularVMView rvmView;
-    private final SpecialVMView spView;
+    private VendingMachineView vmView;
     private RegularVMModel rvmModel;
+    private RegularVMView rvmView;
+    private RegularVMController rvmControl;
+    private boolean isRvmActive;
+    private boolean isSpvmActive;
 
-    public VendingMachineController(VendingMachineView vmView, RegularVMView rvmView, SpecialVMView spView){
+    /**
+     * creates a instance of the vendong machine's controller
+     * @param vmView is the view of the vending machine
+     */
+    public VendingMachineController(VendingMachineView vmView){
         this.vmView = vmView;
-        this.rvmView = rvmView;
-        this.spView = spView;
+        this.isRvmActive = false;
+        this.isSpvmActive = false;
+
+        rvmModel = new RegularVMModel();
+        rvmView = new RegularVMView();
+        rvmControl = new RegularVMController(rvmModel, rvmView);
 
         this.vmView.setRvmBtnActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 vmView.dispose();
                 RegularVMView regView = new RegularVMView();
                 regView.setVisible(true);
+                isRvmActive = true;
             }
             
         });
@@ -29,24 +43,7 @@ public class VendingMachineController {
                 vmView.dispose();
                 SpecialVMView specView = new SpecialVMView();
                 specView.setVisible(true);
-            }
-            
-        });
-
-        this.rvmView.setAddBtnActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String cashList = " ";
-                double den = rvmView.getDenomListSelectedItem();
-                rvmModel.matchDenomination(den);
-                
-
-                for(Denomination denomination : rvmModel.getPayment()){
-                    cashList += rvmView.getCashSliderValue() + " " + denomination.getDenomination();
-                }
-
-                rvmView.setDisplayTextArea(cashList);
+                isSpvmActive = true;
             }
             
         });

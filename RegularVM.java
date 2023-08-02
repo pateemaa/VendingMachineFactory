@@ -1,77 +1,105 @@
 import java.util.*;
 
+/**
+ * RegularVM class contains all the attributes and behaviors of the Regular Vending Machine
+ */
 public class RegularVM{
+    CashRegister register;
+    Inventory inventory;
 
-    private double dSales;
-    private Map<Item, Integer> endInv;
-    private Map<Item, Integer> startInv;
-
-    public RegularVM(){
-        dSales = 0.00;
-        startInv = new HashMap<>();
-        endInv = new HashMap<>();
+    /**
+     * creates an instance of regular vending machine
+     * @param register the cash register, which is responsible for transaction related actions
+     * @param inventory is the inventory, contains the list of products and its quantity
+     */
+    public RegularVM(CashRegister register, Inventory inventory){
+        this.register = register;
+        this.inventory = inventory;
     }
 
-    public void printSummary(){
-        
-        System.out.println("Starting Inventory: ");
-        for (Item item : startInv.keySet()) {
-            int quantity = startInv.get(item);
-            System.out.println(item.getName() + ": " + quantity);
-        }
+    /**
+     * performs the vending transaction
+     * @param dPayment is the total payment entered by the customer
+     * @param item is the item chosen by the customer
+     * @return a boolean value signifying success or failure of transaction
+     */
+    public boolean doTransaction(double dPayment, Item item){
+        double dTotalCost;
+        boolean isSuccessful = false;
 
-        System.out.println("Ending Inventory: ");
-        for (Item item : endInv.keySet()) {
-            int quantity = endInv.get(item);
-            System.out.println(item.getName() + ": " + quantity);
-        }
+        register.calculateTotalCost(item);
+        dTotalCost = register.getTotalCost();
 
-        System.out.println("Total Sales: " + dSales);
-    }
-    
-    public void setStartingInventory(ArrayList<Item> itemList) {
-        startInv.clear();
-    
-        for (Item item : itemList) {
-            int quantity = item.getQuantity();
-            startInv.put(item, quantity);
-        }
-    }
-
-    public void setEndingInventory(ArrayList<Item> itemList) {
-        endInv.clear();
-    
-        for (Item item : itemList) {
-            int quantity = item.getQuantity();
-            endInv.put(item, quantity);
-        }
-    }
-    
-
-    public double getSales(){
-        return dSales;
-    }
-
-    public void dispenseItem(Item item, double payment) {
-        if (item.getQuantity() > 0) {
-            if (payment >= item.getPrice()) {
-                // Dispensing the item
-                System.out.println("Dispensing " + item.getName() + "...");
-    
-                // Update the sales and inventory
-                dSales += item.getPrice();
-                item.setQuantity(item.getQuantity() - 1);
-    
-                // Update the ending inventory
-                int currentEndingQty = endInv.getOrDefault(item, 0);
-                endInv.put(item, currentEndingQty + 1);
-            } else {
-                System.out.println("Error: Insufficient payment");
+        if(dPayment >= dTotalCost){
+            register.receivePayment(dPayment);
+            register.calculateChange(dPayment, dTotalCost);
+            if(register.isChangeEnough(dPayment) && (inventory.getProductQy(item) > 0)){
+                dispenseItem(item);
+                register.produceChange(dPayment);
+                isSuccessful = true;
             }
-        } else {
-            System.out.println("Error: Item not available");
         }
+        return isSuccessful;
     }
     
+    /**
+     * dispenses the item, the method also updates the inventory of the chosen product
+     * @param item is the product chosen by the customer
+     */
+    public void dispenseItem(Item item){
+        inventory.reduceProduct(item, 1);
+    }
     
+    /**
+     * restocks the products
+     * @param product the product to be restocked
+     * @param productQty the quantity of the product to be added
+     */
+    public void restockItem(Product product, int productQty){
+        inventory.restockProduct(product, productQty);
+    }
+
+    /**
+     * replenishes the cash register given the denomination and its quantity  
+     * @param denomination is the denomination
+     * @param denomQty is the quantity to be added
+     */
+    public void replenishDenomination(Denomination denomination, int denomQty){
+        register.addMoney(denomination, denomQty);
+    }
+
+    /**
+     * updates the proces of the product
+     * @param product is the product
+     * @param newPrice is the new price of the product
+     */
+    public void updatePrice(Product product, double newPrice){
+        inventory.setNewProductPrice(product, newPrice);
+    }
+
+    /**
+     * method for ower to collect cash from register
+     * @param denomination is the denomination
+     * @param denomQty is the quantity collected
+     */
+    public void collectCash(Denomination denomination, int denomQty){
+        register.collectPayment(denomination, denomQty);
+    }
+
+    /**
+     * method that calls the inventory getter from invetory class
+     * @return the inventory of the products, a list of products and its stock
+     */
+    public Map<Product, Integer> returnInventory(){
+        return inventory.getInventory();
+    }
+
+    /**
+     * getter for the item's stock
+     * @param item is the item
+     * @return the item's stock
+     */
+    public int getItemQty(Item item){
+        return inventory.getProductQy(item);
+    }
 }

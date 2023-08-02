@@ -1,56 +1,97 @@
 import java.util.*;
 
+/**
+ * CashRegister class contains the attributes and behaviors of a cash register
+ */
 public class CashRegister{
     private Map<Denomination, Integer> register;
     private double dTotalCost;
+    private double dChange;
 
-    public CashRegister(Denomination denom, int nDenomQty){
+    /**
+     * creates an instance of a cash register
+     */
+    public CashRegister(){
         register = new HashMap<>();
-        register.put(denom, nDenomQty);
     }
 
+    /**
+     * getter for the register
+     * @return the values of the registerm denomination and its quantity
+     */
     public Map<Denomination, Integer> getRegister(){
         return register;
     } 
 
+    /**
+     * method to add an amount of the denomination
+     * @param denom is the denomination
+     * @param nDenomQty is the quantity to be added
+     */
     public void addMoney(Denomination denom, int nDenomQty){
         int nCurrQty, nNewQty;
 
         if(register.containsKey(denom)){
-            nCurrQty = register.get(denom);
-            nNewQty = nCurrQty + nDenomQty;
 
-            if(nNewQty >= 0){
+            try {
+                if(nDenomQty < 0){
+                    throw new IllegalArgumentException("Quantity must be a non-negative number");
+                }
+                nCurrQty = register.get(denom);
+                nNewQty = nCurrQty + nDenomQty;
                 register.put(denom, nNewQty);
-            }else{
-                System.out.println("Invalid quantity");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
             }
+            
         }else{
-            System.out.println("Invalid denomination");
+            register.put(new Denomination(denom.getDenomination()), nDenomQty);
         }
     }
 
+    /**
+     * subtracts money from the register
+     * @param denom is the denomination
+     * @param nDenomQty is the quantity to be subtracted
+     */
     public void subtractMoney(Denomination denom, int nDenomQty){
         int nCurrQty, nNewQty;
 
         if(register.containsKey(denom)){
-            nCurrQty = register.get(denom);
-            nNewQty = nCurrQty - nDenomQty;
 
-            if(nNewQty >= 0){
+            try {
+                if(nDenomQty < 0){
+                    throw new IllegalArgumentException("Quantity must be a non-negative number");
+                }
+                
+                nCurrQty = register.get(denom);
+                if(nCurrQty < nDenomQty){
+                    throw new IllegalArgumentException("Register has insufficient funds");
+                }      
+                nNewQty = nCurrQty - nDenomQty;
                 register.put(denom, nNewQty);
-            }else{
-                System.out.println("Invalid quantity");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
             }
+
         }else{
             System.out.println("Invalid denomination");
         }
     }
 
+    /**
+     * calculates the total cost of the items bought by customer
+     * @param item is the item bought by the customer
+     */
     public void calculateTotalCost(Item item){
         dTotalCost = item.getPrice();
     }
 
+    /**
+     * calculates the total cost of the products bought by the customer
+     * @param itemList contains the list of items bought by the user
+     * @param toppingList contains the list of toppings bought by the user
+     */
     public void calculateTotalCost(ArrayList<Item> itemList, ArrayList<Topping> toppingList) {
         double dItemTotal, dTopTotal;
 
@@ -69,43 +110,61 @@ public class CashRegister{
 
     }
 
+    /**
+     * getter for the total cost of products
+     * @return the total cost of the products
+     */
     public double getTotalCost(){
         return dTotalCost;
     }
 
-    public void receivePayment(ArrayList<Denomination> denomList, ArrayList<Integer> nDenomQtyList){
-        double dPayment = 0.00; 
-        ArrayList<Double> dDenomination = new ArrayList<>();
-        Denomination d;
-        int i;
-
-        for(i=0; i<denomList.size(); i++){
-            d = denomList.get(i);
-            dDenomination.add(d.getDenomination());
-            dPayment += d.getDenomination()*nDenomQtyList.get(i);
-        }
-
-        if(dPayment >= dTotalCost){
-            for(i=0; i<denomList.size(); i++){
-                addMoney(denomList.get(i), nDenomQtyList.get(i));
-            }
-            System.out.println("Payment made successfully");
-        }else{
-            System.out.println("Error: Payment not enough");
+    /**
+     * receives the payment entered by the user
+     * @param dPayment the total payment entered by the user
+     */
+    public void receivePayment(double dPayment){
+        Map<Denomination, Integer> receivedPayment;
+        receivedPayment = getDenomBreakdown(dPayment);
+        
+        for(Map.Entry<Denomination, Integer> entry : receivedPayment.entrySet()){
+            addMoney(entry.getKey(), entry.getValue());
         }
     }
 
+    /**
+     * Collects the denomination/cash from the register. This method subtracts the amount
+     * of cash collected by the manager/owner.
+     * @param denom is the denomination chosen by the owner
+     * @param nDenomQty is teh amount of bills/coins the owner chooses to collect.
+     */
     public void collectPayment(Denomination denom, int nDenomQty){
         subtractMoney(denom, nDenomQty);
     }
 
-    public double calculateChange(double dPayment, double dPrice){
-        double dChange;
+    /**
+     * Calculates the customer's change
+     * @param dPayment is the total payment entered by the customer
+     * @param dPrice is the total price of the products bought by the customer
+     */
+    public void calculateChange(double dPayment, double dPrice){
         dChange = dPayment - dPrice;
 
+    }
+
+    /**
+     * getter for the change
+     * @return the change
+     */
+    public double getChange(){
         return dChange;
     }
 
+    /**
+     * boolean method to check whether the register contains enough amount of denominations to
+     * produce change
+     * @param dChange is the change
+     * @return a boolean value to confirm whether the register is capable of producing change
+     */
     public boolean isChangeEnough(double dChange){
         int nRegisterQty, nQtyNeeded;
         double dDenomValue;
@@ -129,7 +188,12 @@ public class CashRegister{
         return false;
     }
 
-    public HashMap<Denomination, Integer> countDenomination(double dMoney){
+    /**
+     * produces the denomination breakdown of the total cash entered
+     * @param dMoney is the total cash
+     * @return a list of denomination and its quantity
+     */
+    public HashMap<Denomination, Integer> getDenomBreakdown(double dMoney){
         HashMap<Denomination, Integer> cash;
         double dRem, dDenomValue;
         int nRegisterQty, nDenomQty;
@@ -150,21 +214,22 @@ public class CashRegister{
         return cash;
     }
 
-    public boolean produceChange(double dChange){
+    /**
+     * Method to produce the change. Given the change, it identifies the denomination breakdown
+     * and subtracts the quantity from the register
+     * @param dChange is the change
+     */
+    public void produceChange(double dChange){
         HashMap<Denomination, Integer> cash;
         Denomination denom;
         int nEntryQty;
-        cash = countDenomination(dChange);
+        cash = getDenomBreakdown(dChange);
         
-        if(isChangeEnough(dChange)){
-            for(Map.Entry<Denomination, Integer> entry : cash.entrySet()){
-                denom = entry.getKey();
-                nEntryQty = entry.getValue();
-                subtractMoney(denom, nEntryQty);
-            }
-            return true;
-        }else{
-           return false;
+        for(Map.Entry<Denomination, Integer> entry : cash.entrySet()){
+            denom = entry.getKey();
+            nEntryQty = entry.getValue();
+            subtractMoney(denom, nEntryQty);
         }
+        
     }
 }

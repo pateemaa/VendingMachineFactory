@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class contains the panel for the regular vending machine's view. It displays the images and
+ *  information of the items available in the vending machine.
+ */
 public class RegularVMPanel extends JPanel{
     
     Image rum;
@@ -15,11 +19,14 @@ public class RegularVMPanel extends JPanel{
     Image vermouth;
     RegularVMModel rVmModel;
 
+    /**
+     * Creates an instance of the RegularVMPanel
+     */
     public RegularVMPanel(){
 
         rVmModel = new RegularVMModel();
-        rVmModel.populateItems();
-        rVmModel.populateRegister();
+        rVmModel.initializeInventory();
+        rVmModel.initializeRegister();
 
         rum = new ImageIcon("rum.png").getImage();
         limeJ = new ImageIcon("limej.png").getImage();
@@ -37,6 +44,10 @@ public class RegularVMPanel extends JPanel{
        
     } 
     
+    /**
+     * Paints the component by drawing the vending machine frame, images of items, and their information.
+     * @param g is the Graphics object used for painting.
+     */
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
@@ -72,27 +83,34 @@ public class RegularVMPanel extends JPanel{
         
         g2D.setPaint(Color.BLACK);
         //Product name
-        g2D.drawString(rVmModel.getItems().get(0).getName(), 60, 175);
-        g2D.drawString(rVmModel.getItems().get(1).getName(), 155, 175);
-        g2D.drawString(rVmModel.getItems().get(2).getName(), 270, 175);
-        g2D.drawString(rVmModel.getItems().get(3).getName(), 410, 175);
-        g2D.drawString(rVmModel.getItems().get(4).getName(), 530, 175);
-        g2D.drawString(rVmModel.getItems().get(5).getName(), 55, 354);
-        g2D.drawString(rVmModel.getItems().get(6).getName(), 160, 354);
-        g2D.drawString(rVmModel.getItems().get(7).getName(), 270, 354);
-        g2D.drawString(rVmModel.getItems().get(8).getName(), 405, 354);
-        g2D.drawString(rVmModel.getItems().get(9).getName(), 520, 354);
+        g2D.drawString(rVmModel.getItems().get(0).getName() + " (Cal: " + rVmModel.getItems().get(0).getCalories() + ")", 40, 175);
+        g2D.drawString(rVmModel.getItems().get(1).getName() + " (Cal: " + rVmModel.getItems().get(1).getCalories() + ")", 140, 175);
+        g2D.drawString(rVmModel.getItems().get(2).getName() + " (Cal: " + rVmModel.getItems().get(2).getCalories() + ")", 260, 175);
+        g2D.drawString(rVmModel.getItems().get(3).getName() + " (Cal: " + rVmModel.getItems().get(3).getCalories() + ")", 390, 175);
+        g2D.drawString(rVmModel.getItems().get(4).getName() + " (Cal: " + rVmModel.getItems().get(4).getCalories() + ")", 505, 175);
+        g2D.drawString(rVmModel.getItems().get(5).getName() + " (Cal: " + rVmModel.getItems().get(5).getCalories() + ")", 30, 354);
+        g2D.drawString(rVmModel.getItems().get(6).getName() + " (Cal: " + rVmModel.getItems().get(6).getCalories() + ")", 145, 354);
+        g2D.drawString(rVmModel.getItems().get(7).getName() + " (Cal: " + rVmModel.getItems().get(7).getCalories() + ")", 255, 354);
+        g2D.drawString(rVmModel.getItems().get(8).getName() + " (Cal: " + rVmModel.getItems().get(8).getCalories() + ")", 390, 354);
+        g2D.drawString(rVmModel.getItems().get(9).getName() + " (Cal: " + rVmModel.getItems().get(9).getCalories() + ")", 485, 354);
         //Product prices
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(0).getPrice()), 60, 190);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(1).getPrice()), 170, 190);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(2).getPrice()), 288, 190);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(3).getPrice()), 405, 190);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(4).getPrice()), 532, 190);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(5).getPrice()), 60, 370);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(6).getPrice()), 165, 370);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(7).getPrice()), 290, 370);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(8).getPrice()), 410, 370);
-        g2D.drawString(String.format("%.2f", rVmModel.getItems().get(9).getPrice()), 530, 370);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(0).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(0))), 40, 190);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(1).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(1))), 150, 190);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(2).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(2))), 270, 190);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(3).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(3))), 390, 190);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(4).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(4))), 505, 190);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(5).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(5))), 40, 370);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(6).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(6))), 150, 370);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(7).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(7))), 270, 370);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(8).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(8))), 390, 370);
+        g2D.drawString(String.format("%.2f (Qty: %d)", rVmModel.getItems().get(9).getPrice(), rVmModel.returnItemQty(rVmModel.getItems().get(9))), 505, 370);
+    }
+
+    /**
+     * Updates the display by repainting the panel.
+     */
+    public void updateDisplay(){
+        repaint();
     }
 
 }
